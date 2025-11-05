@@ -1,11 +1,16 @@
 import { useEffect } from "react";
 import LoadingScreen from "../../component/loading-screen";
 import { Typography } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 export default function SplashScreenView() {
+  const navigate = useNavigate();
+
   useEffect(() => {
-    setTimeout(() => {}, 500); // simulasi delay 2 detik
-  }, []);
+    setTimeout(() => {
+      navigate("/auth-signin");
+    }, 1000);
+  }, [navigate]);
 
   return (
     <div
@@ -18,7 +23,6 @@ export default function SplashScreenView() {
         height: "100vh",
       }}
     >
-      <Typography>Welcome to Stomata</Typography>
       <LoadingScreen />
     </div>
   );
