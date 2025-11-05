@@ -4,7 +4,7 @@ import { Typography } from "@mui/material";
 
 export default function SplashScreenView() {
   useEffect(() => {
-    setTimeout(() => {}, 2000); // simulasi delay 2 detik
+    setTimeout(() => {}, 500); // simulasi delay 2 detik
   }, []);
 
   return (
