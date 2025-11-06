@@ -23,7 +23,7 @@ import LandslideIcon from "@mui/icons-material/Landslide";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import { colorPalette } from "../../theme/color-palette";
-import { useState, type JSX } from "react";
+import { useEffect, useState, type JSX } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { signOut } from "firebase/auth";
@@ -70,6 +70,7 @@ export default function HomeParentView() {
   const [isError, setError] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
   const [disableButton, setDisableButton] = useState(false);
+  const [userEmail, setUserEmail] = useState("");
 
   const handleClick = (menu: MenuItem, index: number) => {
     setSelected(menu.name);
@@ -84,6 +85,11 @@ export default function HomeParentView() {
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  useEffect(() => {
+    const user = auth.currentUser;
+    setUserEmail(user?.email ?? "");
+  }, [userEmail]);
 
   async function logout() {
     setLoading(true);
@@ -112,12 +118,25 @@ export default function HomeParentView() {
         sx={{ width: `calc(100% - ${drawerWidth}px)`, ml: `${drawerWidth}px` }}
       >
         <Toolbar>
-          <Typography variant="h6" noWrap component="div">
-            Stomata App
+          <Typography
+            variant="h6"
+            noWrap
+            component="div"
+            sx={{ marginLeft: "auto" }}
+          >
+            Hi, {userEmail}
           </Typography>
         </Toolbar>
       </AppBar>
       <Drawer
+        slotProps={{
+          paper: {
+            sx: {
+              border: "none",
+              boxShadow: "none",
+            },
+          },
+        }}
         sx={{
           width: drawerWidth,
           flexShrink: 0,
@@ -129,7 +148,21 @@ export default function HomeParentView() {
         variant="permanent"
         anchor="left"
       >
-        <Toolbar />
+        <Box sx={{ p: 2 }}>
+          <Typography variant="h6" fontWeight="bold">
+            Stomata App
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            Versi 1.0.0
+          </Typography>
+        </Box>
+        <Box
+          sx={{
+            padding: 2,
+          }}
+        >
+          <Divider />
+        </Box>
         <List>
           {menus.map((data, index) => (
             <ListItem key={data.name}>

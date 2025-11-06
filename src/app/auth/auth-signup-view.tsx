@@ -13,7 +13,7 @@ export default function AuthSignUpView() {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [companyName, setCompanyName] = useState("");
   const [companyAddress, setCompanyAddress] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  // const [confirmPassword, setConfirmPassword] = useState("");
   const [password, setPassword] = useState("");
 
   const [isLoading, setLoading] = useState(false);
@@ -374,6 +374,15 @@ export default function AuthSignUpView() {
             >
               Sign up
             </Button>
+            {isError && (
+              <p
+                style={{
+                  color: colorPalette.primary.error,
+                }}
+              >
+                {errorMsg}
+              </p>
+            )}
             <Box
               sx={{
                 // paddingTop: 8,

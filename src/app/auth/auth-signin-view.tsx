@@ -31,6 +31,8 @@ export default function AuthSignInView() {
       .then((userCredential) => {
         const user = userCredential.user;
         navigate("/home");
+
+        return user;
       })
       .catch((error) => {
         // const errorCode = error.code;
