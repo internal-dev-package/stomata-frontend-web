@@ -1,4 +1,4 @@
-import { Box, Button, TextField, Typography } from "@mui/material";
+import { Box, Button, Card, TextField, Typography } from "@mui/material";
 import bannerAuth from "../../assets/banner-auth.png";
 import { colorPalette } from "../../theme/color-palette";
 import { useNavigate } from "react-router-dom";
@@ -44,47 +44,107 @@ export default function AuthSignUpView() {
           alignItems: "center",
         }}
       >
-        <Box sx={{ width: "80%", maxWidth: 360 }}>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "row",
-            }}
-          >
-            <Typography
-              variant="h6"
-              color={colorPalette.primary.lightGreen}
-              fontWeight={600}
-              textAlign="center"
-              mb={2}
-              paddingRight={1}
+        <Card
+          elevation={4}
+          sx={{
+            padding: 10,
+            boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.2)",
+            borderRadius: 5,
+          }}
+        >
+          <Box>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+              }}
             >
-              Create account for
-            </Typography>
-            <Typography
-              variant="h6"
-              color="#000000ff"
-              fontWeight={600}
-              textAlign="center"
-              mb={2}
+              <Typography
+                variant="h6"
+                color={colorPalette.primary.lightGreen}
+                fontWeight={600}
+                textAlign="center"
+                mb={2}
+                paddingRight={1}
+              >
+                Create account for
+              </Typography>
+              <Typography
+                variant="h6"
+                color="#000000ff"
+                fontWeight={600}
+                textAlign="center"
+                mb={2}
+              >
+                STOMATA App
+              </Typography>
+            </Box>
+
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+              }}
+              gap={2}
             >
-              STOMATA App
-            </Typography>
-          </Box>
+              <TextField
+                label="Full name"
+                variant="outlined"
+                fullWidth
+                margin="normal"
+                sx={{
+                  borderRadius: 1,
+                  backgroundColor: "#EBF5EE",
+                  "& .MuiOutlinedInput-root": {
+                    "& fieldset": {
+                      borderColor: "#ccc",
+                    },
+                    "&:hover fieldset": {
+                      borderColor: colorPalette.primary.lightGreen,
+                    },
+                    "&.Mui-focused fieldset": {
+                      borderColor: colorPalette.primary.lightGreen,
+                    },
+                  },
+                  "& .MuiInputLabel-root.Mui-focused": {
+                    color: colorPalette.primary.lightGreen,
+                  },
+                }}
+              />
+              <TextField
+                label="Email Address"
+                variant="outlined"
+                fullWidth
+                margin="normal"
+                sx={{
+                  borderRadius: 1,
+                  backgroundColor: "#EBF5EE",
+                  "& .MuiOutlinedInput-root": {
+                    "& fieldset": {
+                      borderColor: "#ccc",
+                    },
+                    "&:hover fieldset": {
+                      borderColor: colorPalette.primary.lightGreen,
+                    },
+                    "&.Mui-focused fieldset": {
+                      borderColor: colorPalette.primary.lightGreen,
+                    },
+                  },
+                  "& .MuiInputLabel-root.Mui-focused": {
+                    color: colorPalette.primary.lightGreen,
+                  },
+                }}
+              />
+            </Box>
 
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "row",
-            }}
-            gap={2}
-          >
             <TextField
-              label="Full name"
+              label="Phone Number"
               variant="outlined"
               fullWidth
               margin="normal"
               sx={{
+                borderRadius: 1,
+                backgroundColor: "#EBF5EE",
                 "& .MuiOutlinedInput-root": {
                   "& fieldset": {
                     borderColor: "#ccc",
@@ -101,12 +161,73 @@ export default function AuthSignUpView() {
                 },
               }}
             />
+
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+              }}
+              gap={2}
+            >
+              <TextField
+                label="Company Name"
+                variant="outlined"
+                fullWidth
+                margin="normal"
+                sx={{
+                  borderRadius: 1,
+                  backgroundColor: "#EBF5EE",
+                  "& .MuiOutlinedInput-root": {
+                    "& fieldset": {
+                      borderColor: "#ccc",
+                    },
+                    "&:hover fieldset": {
+                      borderColor: colorPalette.primary.lightGreen,
+                    },
+                    "&.Mui-focused fieldset": {
+                      borderColor: colorPalette.primary.lightGreen,
+                    },
+                  },
+                  "& .MuiInputLabel-root.Mui-focused": {
+                    color: colorPalette.primary.lightGreen,
+                  },
+                }}
+              />
+              <TextField
+                label="Company Address"
+                variant="outlined"
+                fullWidth
+                margin="normal"
+                sx={{
+                  borderRadius: 1,
+                  backgroundColor: "#EBF5EE",
+                  "& .MuiOutlinedInput-root": {
+                    "& fieldset": {
+                      borderColor: "#ccc",
+                    },
+                    "&:hover fieldset": {
+                      borderColor: colorPalette.primary.lightGreen,
+                    },
+                    "&.Mui-focused fieldset": {
+                      borderColor: colorPalette.primary.lightGreen,
+                    },
+                  },
+                  "& .MuiInputLabel-root.Mui-focused": {
+                    color: colorPalette.primary.lightGreen,
+                  },
+                }}
+              />
+            </Box>
+
             <TextField
-              label="Email Address"
+              label="Password"
+              type="password"
               variant="outlined"
               fullWidth
               margin="normal"
               sx={{
+                borderRadius: 1,
+                backgroundColor: "#EBF5EE",
                 "& .MuiOutlinedInput-root": {
                   "& fieldset": {
                     borderColor: "#ccc",
@@ -123,44 +244,16 @@ export default function AuthSignUpView() {
                 },
               }}
             />
-          </Box>
 
-          <TextField
-            label="Phone Number"
-            variant="outlined"
-            fullWidth
-            margin="normal"
-            sx={{
-              "& .MuiOutlinedInput-root": {
-                "& fieldset": {
-                  borderColor: "#ccc",
-                },
-                "&:hover fieldset": {
-                  borderColor: colorPalette.primary.lightGreen,
-                },
-                "&.Mui-focused fieldset": {
-                  borderColor: colorPalette.primary.lightGreen,
-                },
-              },
-              "& .MuiInputLabel-root.Mui-focused": {
-                color: colorPalette.primary.lightGreen,
-              },
-            }}
-          />
-
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "row",
-            }}
-            gap={2}
-          >
             <TextField
-              label="Company Name"
+              label="Confirm Password"
+              type="password"
               variant="outlined"
               fullWidth
               margin="normal"
               sx={{
+                borderRadius: 1,
+                backgroundColor: "#EBF5EE",
                 "& .MuiOutlinedInput-root": {
                   "& fieldset": {
                     borderColor: "#ccc",
@@ -177,108 +270,38 @@ export default function AuthSignUpView() {
                 },
               }}
             />
-            <TextField
-              label="Company Address"
-              variant="outlined"
-              fullWidth
-              margin="normal"
-              sx={{
-                "& .MuiOutlinedInput-root": {
-                  "& fieldset": {
-                    borderColor: "#ccc",
-                  },
-                  "&:hover fieldset": {
-                    borderColor: colorPalette.primary.lightGreen,
-                  },
-                  "&.Mui-focused fieldset": {
-                    borderColor: colorPalette.primary.lightGreen,
-                  },
-                },
-                "& .MuiInputLabel-root.Mui-focused": {
-                  color: colorPalette.primary.lightGreen,
-                },
-              }}
-            />
-          </Box>
-
-          <TextField
-            label="Password"
-            type="password"
-            variant="outlined"
-            fullWidth
-            margin="normal"
-            sx={{
-              "& .MuiOutlinedInput-root": {
-                "& fieldset": {
-                  borderColor: "#ccc",
-                },
-                "&:hover fieldset": {
-                  borderColor: colorPalette.primary.lightGreen,
-                },
-                "&.Mui-focused fieldset": {
-                  borderColor: colorPalette.primary.lightGreen,
-                },
-              },
-              "& .MuiInputLabel-root.Mui-focused": {
-                color: colorPalette.primary.lightGreen,
-              },
-            }}
-          />
-
-          <TextField
-            label="Confirm Password"
-            type="password"
-            variant="outlined"
-            fullWidth
-            margin="normal"
-            sx={{
-              "& .MuiOutlinedInput-root": {
-                "& fieldset": {
-                  borderColor: "#ccc",
-                },
-                "&:hover fieldset": {
-                  borderColor: colorPalette.primary.lightGreen,
-                },
-                "&.Mui-focused fieldset": {
-                  borderColor: colorPalette.primary.lightGreen,
-                },
-              },
-              "& .MuiInputLabel-root.Mui-focused": {
-                color: colorPalette.primary.lightGreen,
-              },
-            }}
-          />
-          <Button
-            fullWidth
-            variant="contained"
-            sx={{
-              mt: 3,
-              bgcolor: colorPalette.primary.lightGreen,
-              color: colorPalette.primary.white,
-              "&:hover": { bgcolor: colorPalette.primary.darkGreen },
-            }}
-          >
-            Sign up
-          </Button>
-          <Box
-            sx={{
-              paddingTop: 8,
-              display: "flex",
-              flexDirection: "row",
-            }}
-          >
-            <p>have account? </p>
             <Button
-              variant="text"
-              onClick={goBack}
+              fullWidth
+              variant="contained"
               sx={{
-                color: colorPalette.primary.lightGreen,
+                mt: 3,
+                bgcolor: colorPalette.primary.lightGreen,
+                color: colorPalette.primary.white,
+                "&:hover": { bgcolor: colorPalette.primary.darkGreen },
               }}
             >
-              Sign in
+              Sign up
             </Button>
+            <Box
+              sx={{
+                // paddingTop: 8,
+                display: "flex",
+                flexDirection: "row",
+              }}
+            >
+              <p>have account? </p>
+              <Button
+                variant="text"
+                onClick={goBack}
+                sx={{
+                  color: colorPalette.primary.lightGreen,
+                }}
+              >
+                Sign in
+              </Button>
+            </Box>
           </Box>
-        </Box>
+        </Card>
       </Box>
     </div>
   );
