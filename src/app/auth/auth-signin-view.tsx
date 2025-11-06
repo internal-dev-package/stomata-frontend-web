@@ -1,5 +1,5 @@
 import { Box, Button, TextField, Typography } from "@mui/material";
-// import bannerAuth from "../../assets/banner-auth.png";
+import bannerAuth from "../../assets/banner-auth.png";
 import { colorPalette } from "../../theme/color-palette";
 import { useNavigate } from "react-router-dom";
 
@@ -20,7 +20,7 @@ export default function AuthSignInView() {
         flexDirection: "row",
       }}
     >
-      {/* <Box
+      <Box
         sx={{
           flex: 1,
         }}
@@ -33,7 +33,7 @@ export default function AuthSignInView() {
             objectFit: "cover", // biar gambar proporsional (tidak gepeng)
           }}
         />
-      </Box> */}
+      </Box>
       <Box
         sx={{
           flex: 1,
