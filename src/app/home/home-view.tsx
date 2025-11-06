@@ -19,32 +19,40 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import { colorPalette } from "../../theme/color-palette";
 import { useState, type JSX } from "react";
+import { useNavigate } from "react-router-dom";
 
 const drawerWidth = 240;
 
 interface MenuItem {
   name: string;
+  type: string;
   icon: JSX.Element;
 }
 
 export default function HomeView() {
+  const navigate = useNavigate();
+
   const menus: MenuItem[] = [
     {
       icon: <AgricultureIcon sx={{ color: colorPalette.primary.darkGreen }} />,
+      type: "FARMER",
       name: "Farmer",
     },
     {
       icon: <LandslideIcon sx={{ color: colorPalette.primary.darkGreen }} />,
+      type: "LAND",
       name: "Farmland",
     },
     {
       icon: (
         <AccountCircleIcon sx={{ color: colorPalette.primary.darkGreen }} />
       ),
+      type: "PROFILE",
       name: "Profile",
     },
     {
       icon: <ExitToAppIcon sx={{ color: colorPalette.primary.darkGreen }} />,
+      type: "SIGNOUT",
       name: "Sign out",
     },
   ];
@@ -54,6 +62,10 @@ export default function HomeView() {
   const handleClick = (menu: MenuItem, index: number) => {
     setSelected(menu.name);
     console.log("Clicked:", menu.name);
+
+    if (menu.type === "SIGNOUT") {
+      navigate(-1);
+    }
     // bisa tambah navigasi atau aksi lain di sini
   };
 
