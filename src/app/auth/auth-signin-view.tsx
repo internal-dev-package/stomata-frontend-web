@@ -3,16 +3,69 @@ import bannerAuth from "../../assets/banner-auth.png";
 import { colorPalette } from "../../theme/color-palette";
 import { useNavigate } from "react-router-dom";
 
+import { signInWithEmailAndPassword } from "firebase/auth";
+
+import { useState } from "react";
+import { auth } from "../../firebase-configuration";
+
 export default function AuthSignInView() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [isLoading, setLoading] = useState(false);
+  const [isError, setError] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
+  const [disableButton, setDisableButton] = useState(true);
   const navigate = useNavigate();
 
   function toSignUp() {
     navigate("/auth-signup");
   }
 
-  function login() {
-    navigate("/home");
+  async function login() {
+    console.log("email: ", email);
+    console.log("password: ", password);
+
+    setLoading(true);
+
+    await signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        navigate("/home");
+      })
+      .catch((error) => {
+        // const errorCode = error.code;
+        // const errorMessage = error.message;
+
+        setError(true);
+        setErrorMsg(error.message);
+      });
+
+    setLoading(false);
   }
+
+  const emailInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(event.target.value);
+
+    if (email !== "" && password !== "") {
+      setDisableButton(false);
+    } else {
+      setDisableButton(true);
+    }
+  };
+
+  const passwordInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(event.target.value);
+
+    if (email !== "" && password !== "") {
+      setDisableButton(false);
+    } else {
+      setDisableButton(true);
+    }
+  };
+
+  // if (isLoading) {
+  //   return <Skeleton animation="wave" />;
+  // }
 
   return (
     <div
@@ -87,6 +140,7 @@ export default function AuthSignInView() {
             <TextField
               label="Email Address"
               variant="outlined"
+              onChange={emailInput}
               fullWidth
               margin="normal"
               sx={{
@@ -111,6 +165,7 @@ export default function AuthSignInView() {
             <TextField
               label="Password"
               type="password"
+              onChange={passwordInput}
               variant="outlined"
               fullWidth
               margin="normal"
@@ -133,7 +188,10 @@ export default function AuthSignInView() {
                 },
               }}
             />
+
             <Button
+              loading={isLoading}
+              disabled={disableButton}
               onClick={login}
               fullWidth
               variant="contained"
@@ -146,6 +204,17 @@ export default function AuthSignInView() {
             >
               Sign in
             </Button>
+
+            {isError && (
+              <p
+                style={{
+                  color: colorPalette.primary.error,
+                }}
+              >
+                {errorMsg}
+              </p>
+            )}
+
             <Box
               sx={{
                 paddingTop: 8,
@@ -155,6 +224,7 @@ export default function AuthSignInView() {
             >
               <p>Don't have account? </p>
               <Button
+                loading={isLoading}
                 variant="text"
                 onClick={toSignUp}
                 sx={{
