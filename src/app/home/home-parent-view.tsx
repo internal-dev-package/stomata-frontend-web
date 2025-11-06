@@ -29,7 +29,7 @@ interface MenuItem {
   icon: JSX.Element;
 }
 
-export default function HomeView() {
+export default function HomeParentView() {
   const navigate = useNavigate();
 
   const menus: MenuItem[] = [
