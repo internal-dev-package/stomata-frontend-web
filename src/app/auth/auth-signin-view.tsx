@@ -51,6 +51,8 @@ export default function AuthSignInView() {
     } else {
       setDisableButton(true);
     }
+
+    setError(false);
   };
 
   const passwordInput = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -61,6 +63,8 @@ export default function AuthSignInView() {
     } else {
       setDisableButton(true);
     }
+
+    setError(false);
   };
 
   // if (isLoading) {

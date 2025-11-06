@@ -2,13 +2,96 @@ import { Box, Button, Card, TextField, Typography } from "@mui/material";
 import bannerAuth from "../../assets/banner-auth.png";
 import { colorPalette } from "../../theme/color-palette";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../firebase-configuration";
 
 export default function AuthSignUpView() {
+  const [fullname, setFullname] = useState("");
+  const [email, setEmail] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [companyName, setCompanyName] = useState("");
+  const [companyAddress, setCompanyAddress] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [password, setPassword] = useState("");
+
+  const [isLoading, setLoading] = useState(false);
+  const [isError, setError] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
+  const [disableButton, setDisableButton] = useState(true);
   const navigate = useNavigate();
 
   function goBack() {
     navigate(-1);
   }
+
+  async function signup() {
+    setLoading(true);
+    await createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        navigate(-1);
+      })
+      .catch((error) => {
+        setError(true);
+        setErrorMsg(error.message);
+      });
+    setLoading(false);
+  }
+
+  function validateInput() {
+    if (
+      email !== "" &&
+      password !== "" &&
+      fullname !== "" &&
+      phoneNumber !== "" &&
+      companyName !== "" &&
+      companyAddress !== ""
+    ) {
+      setDisableButton(false);
+    } else {
+      setDisableButton(true);
+    }
+
+    setError(false);
+  }
+
+  const emailInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(event.target.value);
+
+    validateInput();
+  };
+
+  const passwordInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(event.target.value);
+
+    validateInput();
+  };
+
+  const fullNameInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setFullname(event.target.value);
+
+    validateInput();
+  };
+
+  const phoneNumberInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setPhoneNumber(event.target.value);
+
+    validateInput();
+  };
+
+  const companyNameInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setCompanyName(event.target.value);
+
+    validateInput();
+  };
+
+  const companyAddressInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setCompanyAddress(event.target.value);
+
+    validateInput();
+  };
 
   return (
     <div
@@ -89,6 +172,7 @@ export default function AuthSignUpView() {
             >
               <TextField
                 label="Full name"
+                onChange={fullNameInput}
                 variant="outlined"
                 fullWidth
                 margin="normal"
@@ -113,6 +197,7 @@ export default function AuthSignUpView() {
               />
               <TextField
                 label="Email Address"
+                onChange={emailInput}
                 variant="outlined"
                 fullWidth
                 margin="normal"
@@ -139,6 +224,7 @@ export default function AuthSignUpView() {
 
             <TextField
               label="Phone Number"
+              onChange={phoneNumberInput}
               variant="outlined"
               fullWidth
               margin="normal"
@@ -171,6 +257,7 @@ export default function AuthSignUpView() {
             >
               <TextField
                 label="Company Name"
+                onChange={companyNameInput}
                 variant="outlined"
                 fullWidth
                 margin="normal"
@@ -195,6 +282,7 @@ export default function AuthSignUpView() {
               />
               <TextField
                 label="Company Address"
+                onChange={companyAddressInput}
                 variant="outlined"
                 fullWidth
                 margin="normal"
@@ -221,6 +309,7 @@ export default function AuthSignUpView() {
 
             <TextField
               label="Password"
+              onChange={passwordInput}
               type="password"
               variant="outlined"
               fullWidth
@@ -272,6 +361,9 @@ export default function AuthSignUpView() {
             />
             <Button
               fullWidth
+              onClick={signup}
+              loading={isLoading}
+              disabled={disableButton}
               variant="contained"
               sx={{
                 mt: 3,
@@ -292,6 +384,7 @@ export default function AuthSignUpView() {
               <p>have account? </p>
               <Button
                 variant="text"
+                loading={isLoading}
                 onClick={goBack}
                 sx={{
                   color: colorPalette.primary.lightGreen,
