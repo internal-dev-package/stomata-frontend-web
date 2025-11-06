@@ -32,6 +32,8 @@ export default function AuthSignUpView() {
       .then((userCredential) => {
         const user = userCredential.user;
         navigate(-1);
+
+        return user;
       })
       .catch((error) => {
         setError(true);

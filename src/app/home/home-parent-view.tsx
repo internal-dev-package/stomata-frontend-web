@@ -75,6 +75,7 @@ export default function HomeParentView() {
   const handleClick = (menu: MenuItem, index: number) => {
     setSelected(menu.name);
     console.log("Clicked:", menu.name);
+    console.log("index:", index);
 
     if (menu.type === "SIGNOUT") {
       // navigate(-1);
@@ -183,7 +184,7 @@ export default function HomeParentView() {
       <Dialog
         disableEscapeKeyDown
         open={open}
-        onClose={(event, reason) => {
+        onClose={(reason) => {
           if (reason === "backdropClick") return; // cegah close saat klik background
           handleClose();
         }}

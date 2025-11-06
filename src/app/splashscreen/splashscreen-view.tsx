@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import LoadingScreen from "../../component/loading-screen";
-import { Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 export default function SplashScreenView() {
