@@ -10,7 +10,7 @@ const firebaseConfig = {
   projectId: "stomata-blockchain",
   storageBucket: "stomata-blockchain.firebasestorage.app",
   messagingSenderId: "154029402657",
-  appId: "1:154029402657:web:a7c0d1bfc2653df4e95160"
+  appId: "1:154029402657:web:8e521da85b5e1679e95160"
 };
 
 // Initialize Firebase

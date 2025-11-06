@@ -10,6 +10,10 @@ export default function AuthSignInView() {
     navigate("/auth-signup");
   }
 
+  function login() {
+    navigate("/home");
+  }
+
   return (
     <div
       style={{
@@ -118,6 +122,7 @@ export default function AuthSignInView() {
             }}
           />
           <Button
+            onClick={login}
             fullWidth
             variant="contained"
             sx={{
