@@ -45,6 +45,7 @@ import FarmersList from "../../components/FarmersList";
 
 // Kontrak farmer
 import { FARMER_NFT_ABI } from "../../types/farmer";
+import FarmerView from "../farmer/farmer-view";
 // Ganti dengan address kontrak kamu (tetap disediakan kalau butuh)
 const FARMER_CONTRACT_ENV = import.meta.env.FARMER_NFT_ADDRESS as `0x${string}`;
 
@@ -229,7 +230,7 @@ export default function HomeParentView() {
   };
 
   const handleClick = (menu: MenuItem) => {
-    setSelected(menu.name);
+    setSelected(menu.type);
     if (menu.type === "SIGNOUT") setOpen(true);
   };
 
@@ -375,7 +376,7 @@ export default function HomeParentView() {
             <ListItem key={data.name}>
               <ListItemButton
                 onClick={() => handleClick(data)}
-                selected={selected === data.name}
+                selected={selected === data.type}
               >
                 <ListItemIcon>{data.icon}</ListItemIcon>
                 <ListItemText primary={data.name} />
@@ -385,35 +386,7 @@ export default function HomeParentView() {
         </List>
       </Drawer>
 
-      <Box
-        component="main"
-        sx={{
-          flexGrow: 1,
-          p: 4,
-          paddingTop: 15,
-          display: "flex",
-          flexDirection: "column",
-          gap: 2,
-        }}
-      >
-        {/* <Typography variant="h5" gutterBottom>
-          Dashboard
-        </Typography> */}
-        <Alert severity="info">
-          Mint a demo farmer NFT using <b>Panna gasless</b>. Ensure backend is
-          running at {BACKEND_URL}.
-        </Alert>
-        <Button
-          variant="contained"
-          onClick={handleMintFarmer}
-          disabled={!pannaAddress || isMinting}
-          sx={{ width: { xs: "100%", sm: "fit-content" } }}
-        >
-          {isMinting ? <CircularProgress size={16} sx={{ mr: 1 }} /> : null}
-          {isMinting ? "Submitting mint..." : "Mint Farmer NFT (Gasless Demo)"}
-        </Button>
-        {pannaAddress && <FarmersList ownerAddress={pannaAddress} />}
-      </Box>
+      {selected === "FARMER" && <FarmerView />}
 
       <Dialog
         disableEscapeKeyDown

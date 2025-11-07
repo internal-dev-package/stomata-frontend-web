@@ -16,6 +16,7 @@ import {
 import AgricultureIcon from "@mui/icons-material/Agriculture";
 import { useFarmers } from "../hooks/useFarmer";
 import { CopyButton } from "./CopyButton";
+import { useEffect, useImperativeHandle } from "react";
 
 function RowSkeleton() {
   return (
@@ -33,10 +34,19 @@ function RowSkeleton() {
 
 export default function FarmersList({
   ownerAddress,
+  refreshTrigger,
 }: {
   ownerAddress?: string;
+  refreshTrigger?: number;
 }) {
   const { data, loading, error, refetch } = useFarmers(ownerAddress);
+
+  // just for refresh, its not recomended do refresh like this
+  useEffect(() => {
+    if (refreshTrigger !== undefined) {
+      refetch();
+    }
+  }, [refreshTrigger]);
 
   return (
     <Box>

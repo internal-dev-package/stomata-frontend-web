@@ -1,4 +1,4 @@
-import { Alert, Box, Button, CircularProgress } from "@mui/material";
+import { Alert, Box, Button, CircularProgress, Snackbar } from "@mui/material";
 import { useState } from "react";
 
 // Hook yang baru (tanpa low-level relay)
@@ -30,6 +30,7 @@ export default function FarmerView() {
     "success"
   );
   const [isMinting, setIsMinting] = useState(false);
+  const [refreshTrigger, setRefreshTrigger] = useState(0);
 
   const showSnack = (message: string, severity: "success" | "error") => {
     setSnackSeverity(severity);
@@ -114,6 +115,8 @@ export default function FarmerView() {
       });
 
       showSnack(`Submitted mint (gasless) for CID ${pinJson.cid}`, "success");
+
+      setRefreshTrigger((prev) => prev + 1);
     } catch (error) {
       console.error("Mint farmer failed", error);
       showSnack(
@@ -131,6 +134,7 @@ export default function FarmerView() {
       sx={{
         flexGrow: 1,
         p: 4,
+        paddingTop: 15,
         display: "flex",
         flexDirection: "column",
         gap: 2,
@@ -153,7 +157,22 @@ export default function FarmerView() {
         {isMinting ? "Submitting mint..." : "Mint Farmer NFT (Gasless Demo)"}
       </Button>
 
-      <FarmersList ownerAddress={pannaAddress ?? undefined} />
+      <FarmersList
+        ownerAddress={pannaAddress ?? undefined}
+        refreshTrigger={refreshTrigger}
+      />
+      <Snackbar
+        open={snackOpen || Boolean(pannaError)}
+        autoHideDuration={4000}
+        onClose={() => setSnackOpen(false)}
+      >
+        <Alert
+          severity={pannaError ? "error" : snackSeverity}
+          onClose={() => setSnackOpen(false)}
+        >
+          {pannaError ?? snackMsg}
+        </Alert>
+      </Snackbar>
     </Box>
   );
 }
