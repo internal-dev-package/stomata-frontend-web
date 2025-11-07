@@ -21,29 +21,25 @@ export default function AuthSignInView() {
     navigate("/auth-signup");
   }
 
-  async function login() {
-    console.log("email: ", email);
-    console.log("password: ", password);
-
-    setLoading(true);
-
-    await signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
+    async function login() {
+      try {
+        setLoading(true);
+        setError(false);
+        setErrorMsg("");
+      
+        // First authenticate with Firebase
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      
+        // Then redirect to home where wallet connection will be handled
         navigate("/home");
-
-        return user;
-      })
-      .catch((error) => {
-        // const errorCode = error.code;
-        // const errorMessage = error.message;
-
+        return userCredential.user;
+      } catch (error) {
         setError(true);
-        setErrorMsg(error.message);
-      });
-
-    setLoading(false);
-  }
+        setErrorMsg(error instanceof Error ? error.message : "Login failed");
+      } finally {
+        setLoading(false);
+      }
+    }
 
   const emailInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
@@ -96,7 +92,7 @@ export default function AuthSignInView() {
             objectFit: "cover", // biar gambar proporsional (tidak gepeng)
           }}
         />
-      </Box>
+        </Box>
       <Box
         sx={{
           flex: 1,
