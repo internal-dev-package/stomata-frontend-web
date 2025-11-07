@@ -23,10 +23,12 @@ import { LoginButton, liskSepolia } from "panna-sdk";
 // Hook yang baru (tanpa low-level relay)
 import { usePannaRelay } from "../../hooks/usePannaWallet";
 
+import FarmersList from "../../components/FarmersList";
+
 // Kontrak farmer
 import { FARMER_NFT_ABI } from "../../types/farmer";
 // Ganti dengan address kontrak kamu (tetap disediakan kalau butuh)
-const FARMER_CONTRACT_ENV = import.meta.env.VITE_FARMER_CONTRACT as `0x${string}`;
+const FARMER_CONTRACT_ENV = import.meta.env.VITE_FARMER_NFT_ADDRESS as `0x${string}`;
 
 const BACKEND_URL =
   (import.meta.env.VITE_BACKEND_URL as string) || "http://localhost:3000";
@@ -310,6 +312,7 @@ export default function HomeParentView() {
           <Button onClick={() => { logout(); }} sx={{ color: colorPalette.primary.error }}>Logout</Button>
         </DialogActions>
       </Dialog>
+      <FarmersList ownerAddress={pannaAddress ?? undefined} />
     </Box>
   );
 }
