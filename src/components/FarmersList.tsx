@@ -1,7 +1,17 @@
 // /src/components/FarmersList.tsx
 import {
-  Card, CardContent, CardHeader, Typography, Box, Grid, Chip, Stack,
-  Skeleton, Button, Divider, Avatar
+  Card,
+  CardContent,
+  CardHeader,
+  Typography,
+  Box,
+  Grid,
+  Chip,
+  Stack,
+  Skeleton,
+  Button,
+  Divider,
+  Avatar,
 } from "@mui/material";
 import AgricultureIcon from "@mui/icons-material/Agriculture";
 import { useFarmers } from "../hooks/useFarmer";
@@ -21,19 +31,31 @@ function RowSkeleton() {
   );
 }
 
-export default function FarmersList({ ownerAddress }: { ownerAddress?: string }) {
+export default function FarmersList({
+  ownerAddress,
+}: {
+  ownerAddress?: string;
+}) {
   const { data, loading, error, refetch } = useFarmers(ownerAddress);
 
   return (
     <Box>
-      {/* <Box display="flex" alignItems="center" justifyContent="space-between" mb={1.5}>
+      <Box
+        display="flex"
+        alignItems="center"
+        justifyContent="space-between"
+        mb={1.5}
+      >
         <Typography variant="h6">
-          Farmer Tokens {ownerAddress ? `(owner: ${ownerAddress.slice(0,6)}...${ownerAddress.slice(-4)})` : ""}
+          Farmer Tokens{" "}
+          {ownerAddress
+            ? `(owner: ${ownerAddress.slice(0, 6)}...${ownerAddress.slice(-4)})`
+            : ""}
         </Typography>
-        <Button variant="outlined" size="small" onClick={() => refetch()}>
+        {/* <Button variant="outlined" size="small" onClick={() => refetch()}>
           Refresh
-        </Button>
-      </Box> */}
+        </Button> */}
+      </Box>
 
       {loading && (
         <Grid container spacing={2}>
@@ -77,7 +99,10 @@ export default function FarmersList({ ownerAddress }: { ownerAddress?: string })
                   title={`Token #${String(f.tokenId)}`}
                   subheader={
                     <Box display="flex" alignItems="center" gap={0.5}>
-                      <Typography variant="caption" sx={{ fontFamily: "monospace" }}>
+                      <Typography
+                        variant="caption"
+                        sx={{ fontFamily: "monospace" }}
+                      >
                         {f.owner.slice(0, 6)}...{f.owner.slice(-4)}
                       </Typography>
                       <CopyButton text={f.owner} />
@@ -90,7 +115,10 @@ export default function FarmersList({ ownerAddress }: { ownerAddress?: string })
                       TokenURI:
                     </Typography>
                     <Box display="flex" alignItems="center" gap={0.5}>
-                      <Typography variant="body2" sx={{ wordBreak: "break-all" }}>
+                      <Typography
+                        variant="body2"
+                        sx={{ wordBreak: "break-all" }}
+                      >
                         <a href={f.tokenURI} target="_blank" rel="noreferrer">
                           {f.tokenURI}
                         </a>
@@ -118,22 +146,37 @@ export default function FarmersList({ ownerAddress }: { ownerAddress?: string })
                       )}
 
                       {/* Company / Farmer ringkas */}
-                      <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
+                      <Stack
+                        direction="row"
+                        spacing={1}
+                        flexWrap="wrap"
+                        useFlexGap
+                      >
                         {f.metadata?.company?.name && (
-                          <Chip label={`Company: ${f.metadata.company.name}`} size="small" />
+                          <Chip
+                            label={`Company: ${f.metadata.company.name}`}
+                            size="small"
+                          />
                         )}
                         {f.metadata?.farmer?.name && (
-                          <Chip label={`Farmer: ${f.metadata.farmer.name}`} size="small" />
+                          <Chip
+                            label={`Farmer: ${f.metadata.farmer.name}`}
+                            size="small"
+                          />
                         )}
                         {Array.isArray(f.metadata?.attributes) &&
-                          f.metadata.attributes.slice(0, 4).map((a: any, idx: number) => (
-                            <Chip
-                              key={idx}
-                              size="small"
-                              label={`${a.trait_type ?? "attr"}: ${String(a.value)}`}
-                              variant="outlined"
-                            />
-                          ))}
+                          f.metadata.attributes
+                            .slice(0, 4)
+                            .map((a: any, idx: number) => (
+                              <Chip
+                                key={idx}
+                                size="small"
+                                label={`${a.trait_type ?? "attr"}: ${String(
+                                  a.value
+                                )}`}
+                                variant="outlined"
+                              />
+                            ))}
                       </Stack>
                     </>
                   ) : (

@@ -15,7 +15,7 @@ These files are read-only / helper utilities and do not change any UI components
 Create a file `.env` or `.env.local` at the frontend root with these variables (Vite uses `VITE_` prefix):
 
 VITE_RPC_URL=https://sepolia.infura.io/v3/<YOUR_KEY>
-VITE_FARMER_NFT_ADDRESS=0x496134698D2EC80b20BDf8aEcb67f56818ad50cf
+FARMER_NFT_ADDRESS=0x496134698D2EC80b20BDf8aEcb67f56818ad50cf
 VITE_BASE_PINATA_GATEWAY=https://gateway.pinata.cloud/ipfs/
 
 Notes:

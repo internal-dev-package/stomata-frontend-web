@@ -1,10 +1,28 @@
 // src/app/home/home-parent-view.tsx
 import { getFarmerContractAddress } from "../../config/contracts";
 import {
-  AppBar, Box, Button, CssBaseline, Dialog, DialogActions, DialogContent,
-  DialogTitle, Divider, Drawer, List, ListItem, ListItemButton, ListItemIcon,
-  ListItemText, Toolbar, Typography, Snackbar, Alert, CircularProgress,
-  IconButton, Tooltip,
+  AppBar,
+  Box,
+  Button,
+  CssBaseline,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Divider,
+  Drawer,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Toolbar,
+  Typography,
+  Snackbar,
+  Alert,
+  CircularProgress,
+  IconButton,
+  Tooltip,
 } from "@mui/material";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import AgricultureIcon from "@mui/icons-material/Agriculture";
@@ -28,7 +46,7 @@ import FarmersList from "../../components/FarmersList";
 // Kontrak farmer
 import { FARMER_NFT_ABI } from "../../types/farmer";
 // Ganti dengan address kontrak kamu (tetap disediakan kalau butuh)
-const FARMER_CONTRACT_ENV = import.meta.env.VITE_FARMER_NFT_ADDRESS as `0x${string}`;
+const FARMER_CONTRACT_ENV = import.meta.env.FARMER_NFT_ADDRESS as `0x${string}`;
 
 const BACKEND_URL =
   (import.meta.env.VITE_BACKEND_URL as string) || "http://localhost:3000";
@@ -43,10 +61,28 @@ interface MenuItem {
 
 export default function HomeParentView() {
   const menus: MenuItem[] = [
-    { icon: <AgricultureIcon sx={{ color: colorPalette.primary.darkGreen }} />, type: "FARMER", name: "Farmer" },
-    { icon: <LandslideIcon sx={{ color: colorPalette.primary.darkGreen }} />, type: "LAND", name: "Farmland" },
-    { icon: <AccountCircleIcon sx={{ color: colorPalette.primary.darkGreen }} />, type: "PROFILE", name: "Profile" },
-    { icon: <ExitToAppIcon sx={{ color: colorPalette.primary.darkGreen }} />, type: "SIGNOUT", name: "Sign out" },
+    {
+      icon: <AgricultureIcon sx={{ color: colorPalette.primary.darkGreen }} />,
+      type: "FARMER",
+      name: "Farmer",
+    },
+    {
+      icon: <LandslideIcon sx={{ color: colorPalette.primary.darkGreen }} />,
+      type: "LAND",
+      name: "Farmland",
+    },
+    {
+      icon: (
+        <AccountCircleIcon sx={{ color: colorPalette.primary.darkGreen }} />
+      ),
+      type: "PROFILE",
+      name: "Profile",
+    },
+    {
+      icon: <ExitToAppIcon sx={{ color: colorPalette.primary.darkGreen }} />,
+      type: "SIGNOUT",
+      name: "Sign out",
+    },
   ];
 
   const [selected, setSelected] = useState<string>("");
@@ -63,7 +99,9 @@ export default function HomeParentView() {
 
   const [snackOpen, setSnackOpen] = useState(false);
   const [snackMsg, setSnackMsg] = useState("");
-  const [snackSeverity, setSnackSeverity] = useState<"success" | "error">("success");
+  const [snackSeverity, setSnackSeverity] = useState<"success" | "error">(
+    "success"
+  );
   const [isLoading, setLoading] = useState(false);
   const [isError, setError] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
@@ -119,17 +157,32 @@ export default function HomeParentView() {
         company: {
           name: "PT Agro Demo",
           owner: "Demo Owner",
-          address: { line1: "Jl. Kebun Raya No. 1", city: "Bandung", province: "Jawa Barat", country: "Indonesia" },
+          address: {
+            line1: "Jl. Kebun Raya No. 1",
+            city: "Bandung",
+            province: "Jawa Barat",
+            country: "Indonesia",
+          },
         },
         farmer: {
           id: `DEMO-${Date.now()}`,
           name: "Farmer Demo",
-          nik: `3204${Math.floor(Math.random() * 1_000_000_000).toString().padStart(9, "0")}`,
+          nik: `3204${Math.floor(Math.random() * 1_000_000_000)
+            .toString()
+            .padStart(9, "0")}`,
           age: 34,
           gender: "M",
-          address: { line1: "Desa Sukamaju", city: "Bandung", province: "Jawa Barat", country: "Indonesia" },
+          address: {
+            line1: "Desa Sukamaju",
+            city: "Bandung",
+            province: "Jawa Barat",
+            country: "Indonesia",
+          },
         },
-        ui: { image: "https://via.placeholder.com/400x400.png?text=Farmer+Demo", tags: ["demo", "gasless", "test"] },
+        ui: {
+          image: "https://via.placeholder.com/400x400.png?text=Farmer+Demo",
+          tags: ["demo", "gasless", "test"],
+        },
         extraAttributes: [
           { trait_type: "experience", value: "5 years" },
           { trait_type: "commodity", value: "Tea" },
@@ -143,13 +196,17 @@ export default function HomeParentView() {
       });
       if (!pinResponse.ok) {
         const errorText = await pinResponse.text();
-        throw new Error(`Pin metadata failed: ${pinResponse.status} ${errorText}`);
+        throw new Error(
+          `Pin metadata failed: ${pinResponse.status} ${errorText}`
+        );
       }
-      const pinJson: { cid: string; tokenURI: string } = await pinResponse.json();
+      const pinJson: { cid: string; tokenURI: string } =
+        await pinResponse.json();
       if (!pinJson?.cid) throw new Error("Pin metadata response missing CID");
 
       // address kontrak bisa dari helper config atau env (helper diutamakan)
-      const FARMER_CONTRACT_ADDRESS = (getFarmerContractAddress?.() as `0x${string}`) || FARMER_CONTRACT_ENV;
+      const FARMER_CONTRACT_ADDRESS =
+        (getFarmerContractAddress?.() as `0x${string}`) || FARMER_CONTRACT_ENV;
 
       // 2) Call kontrak via Thirdweb + akun Panna (gasless by design)
       await sendContractCall({
@@ -162,7 +219,10 @@ export default function HomeParentView() {
       showSnack(`Submitted mint (gasless) for CID ${pinJson.cid}`, "success");
     } catch (error) {
       console.error("Mint farmer failed", error);
-      showSnack(error instanceof Error ? error.message : "Mint failed", "error");
+      showSnack(
+        error instanceof Error ? error.message : "Mint failed",
+        "error"
+      );
     } finally {
       setIsMinting(false);
     }
@@ -200,9 +260,27 @@ export default function HomeParentView() {
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
-      <AppBar color="transparent" position="fixed" sx={{ width: `calc(100% - ${drawerWidth}px)`, ml: `${drawerWidth}px` }}>
-        <Toolbar>
-          <Typography variant="h6" noWrap component="div" sx={{ marginLeft: "auto" }}>
+      <AppBar
+        elevation={0}
+        color="transparent"
+        position="fixed"
+        sx={{ width: `calc(100% - ${drawerWidth}px)`, ml: `${drawerWidth}px` }}
+      >
+        <Toolbar sx={{ pt: 5 }}>
+          <Typography
+            variant="h6"
+            noWrap
+            component="div"
+            sx={{ marginRight: "auto" }}
+          >
+            Dashboard
+          </Typography>
+          <Typography
+            variant="h6"
+            noWrap
+            component="div"
+            sx={{ marginLeft: "auto" }}
+          >
             Hi, {userEmail}
           </Typography>
         </Toolbar>
@@ -219,16 +297,26 @@ export default function HomeParentView() {
         anchor="left"
       >
         <Box sx={{ p: 2 }}>
-          <Typography variant="h6" fontWeight="bold">Stomata App</Typography>
-          <Typography variant="body2" color="text.secondary">Versi 1.0.0</Typography>
+          <Typography variant="h6" fontWeight="bold">
+            Stomata App
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            Versi 1.0.0
+          </Typography>
 
           <Box sx={{ mt: 1 }}>
-            <Typography variant="caption" color="text.secondary">Wallet (Panna)</Typography>
+            <Typography variant="caption" color="text.secondary">
+              Wallet (Panna)
+            </Typography>
 
             {/* Address + Copy button */}
-            <Box sx={{ display: "flex", alignItems: "center", gap: 1, mt: 0.5 }}>
+            <Box
+              sx={{ display: "flex", alignItems: "center", gap: 1, mt: 0.5 }}
+            >
               <Typography variant="body2" sx={{ wordBreak: "break-all" }}>
-                {pannaAddress ? `${pannaAddress.slice(0, 6)}...${pannaAddress.slice(-4)}` : "Not connected"}
+                {pannaAddress
+                  ? `${pannaAddress.slice(0, 6)}...${pannaAddress.slice(-4)}`
+                  : "Not connected"}
               </Typography>
               <Tooltip title={pannaAddress ? "Copy address" : "Connect first"}>
                 <span>
@@ -259,12 +347,21 @@ export default function HomeParentView() {
                 <LoginButton chain={liskSepolia} />
               </div>
             ) : (
-              <Button size="small" disabled sx={{ mt: 1 }}>Connected</Button>
+              <Button size="small" disabled sx={{ mt: 1 }}>
+                Connected
+              </Button>
             )}
           </Box>
 
-          <Snackbar open={snackOpen || Boolean(pannaError)} autoHideDuration={4000} onClose={() => setSnackOpen(false)}>
-            <Alert severity={pannaError ? "error" : snackSeverity} onClose={() => setSnackOpen(false)}>
+          <Snackbar
+            open={snackOpen || Boolean(pannaError)}
+            autoHideDuration={4000}
+            onClose={() => setSnackOpen(false)}
+          >
+            <Alert
+              severity={pannaError ? "error" : snackSeverity}
+              onClose={() => setSnackOpen(false)}
+            >
               {pannaError ?? snackMsg}
             </Alert>
           </Snackbar>
@@ -276,7 +373,10 @@ export default function HomeParentView() {
         <List>
           {menus.map((data) => (
             <ListItem key={data.name}>
-              <ListItemButton onClick={() => handleClick(data)} selected={selected === data.name}>
+              <ListItemButton
+                onClick={() => handleClick(data)}
+                selected={selected === data.name}
+              >
                 <ListItemIcon>{data.icon}</ListItemIcon>
                 <ListItemText primary={data.name} />
               </ListItemButton>
@@ -285,10 +385,23 @@ export default function HomeParentView() {
         </List>
       </Drawer>
 
-      <Box component="main" sx={{ flexGrow: 1, p: 4, display: "flex", flexDirection: "column", gap: 2 }}>
-        <Typography variant="h5" gutterBottom>Dashboard</Typography>
+      <Box
+        component="main"
+        sx={{
+          flexGrow: 1,
+          p: 4,
+          paddingTop: 15,
+          display: "flex",
+          flexDirection: "column",
+          gap: 2,
+        }}
+      >
+        {/* <Typography variant="h5" gutterBottom>
+          Dashboard
+        </Typography> */}
         <Alert severity="info">
-          Mint a demo farmer NFT using <b>Panna gasless</b>. Ensure backend is running at {BACKEND_URL}.
+          Mint a demo farmer NFT using <b>Panna gasless</b>. Ensure backend is
+          running at {BACKEND_URL}.
         </Alert>
         <Button
           variant="contained"
@@ -299,20 +412,42 @@ export default function HomeParentView() {
           {isMinting ? <CircularProgress size={16} sx={{ mr: 1 }} /> : null}
           {isMinting ? "Submitting mint..." : "Mint Farmer NFT (Gasless Demo)"}
         </Button>
+        {pannaAddress && <FarmersList ownerAddress={pannaAddress} />}
       </Box>
 
-      <Dialog disableEscapeKeyDown open={open} onClose={(reason) => { if (reason === "backdropClick") return; handleClose(); }}>
+      <Dialog
+        disableEscapeKeyDown
+        open={open}
+        onClose={(reason) => {
+          if (reason === "backdropClick") return;
+          handleClose();
+        }}
+      >
         <DialogTitle>Logout ?</DialogTitle>
         <DialogContent>
           <Typography>Are you sure want to logout?</Typography>
-          {isError && <p style={{ color: colorPalette.primary.error }}>{errorMsg}</p>}
+          {isError && (
+            <p style={{ color: colorPalette.primary.error }}>{errorMsg}</p>
+          )}
         </DialogContent>
         <DialogActions>
-          <Button disabled={disableButton} onClick={handleClose} sx={{ color: colorPalette.primary.darkGreen }}>Cancel</Button>
-          <Button onClick={() => { logout(); }} sx={{ color: colorPalette.primary.error }}>Logout</Button>
+          <Button
+            disabled={disableButton}
+            onClick={handleClose}
+            sx={{ color: colorPalette.primary.darkGreen }}
+          >
+            Cancel
+          </Button>
+          <Button
+            onClick={() => {
+              logout();
+            }}
+            sx={{ color: colorPalette.primary.error }}
+          >
+            Logout
+          </Button>
         </DialogActions>
       </Dialog>
-      <FarmersList ownerAddress={pannaAddress ?? undefined} />
     </Box>
   );
 }
