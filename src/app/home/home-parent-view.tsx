@@ -1,5 +1,4 @@
 // src/app/home/home-parent-view.tsx
-import { getFarmerContractAddress } from "../../config/contracts";
 import {
   AppBar, Box, Button, CssBaseline, Dialog, DialogActions, DialogContent,
   DialogTitle, Divider, Drawer, List, ListItem, ListItemButton, ListItemIcon,
@@ -16,19 +15,15 @@ import { useEffect, useState, type JSX } from "react";
 import { useNavigate } from "react-router-dom";
 import { signOut } from "firebase/auth";
 import { auth } from "../../firebase-configuration";
+import { useActiveAccount, usePanna } from "panna-sdk";
 
-// Panna SDK UI: tombol login/conn
-import { LoginButton, liskSepolia } from "panna-sdk";
 
-// Hook yang baru (tanpa low-level relay)
+
 import { usePannaRelay } from "../../hooks/usePannaWallet";
-
 import FarmersList from "../../components/FarmersList";
 
-// Kontrak farmer
 import { FARMER_NFT_ABI } from "../../types/farmer";
-// Ganti dengan address kontrak kamu (tetap disediakan kalau butuh)
-const FARMER_CONTRACT_ENV = import.meta.env.FARMER_NFT_ADDRESS as `0x${string}`;
+import { isAddress } from "viem";
 
 const BACKEND_URL =
   (import.meta.env.VITE_BACKEND_URL as string) || "http://localhost:3000";
@@ -41,6 +36,39 @@ interface MenuItem {
   icon: JSX.Element;
 }
 
+async function signOutPannaSafe(client: any) {
+  try {
+    // Prefer API resmi kalau ada
+    if (client?.auth?.signOut) {
+      await client.auth.signOut();
+    } else if (client?.disconnect) {
+      await client.disconnect();
+    } else if (client?.wallet?.disconnect) {
+      await client.wallet.disconnect();
+    }
+  } catch (e) {
+    // swallow – jangan blokir logout total
+    console.warn("Panna signOut failed (ignored):", e);
+  }
+
+  // Bersihkan kemungkinan sesi/SDK lain (opsional, aman)
+  try {
+    const keys = Object.keys(localStorage);
+    for (const k of keys) {
+      if (
+        k.startsWith("panna:") ||
+        k.startsWith("thirdweb:") ||
+        k.startsWith("tw:") ||
+        k.includes("panna") ||
+        k.includes("thirdweb")
+      ) {
+        localStorage.removeItem(k);
+      }
+    }
+  } catch {}
+}
+
+
 export default function HomeParentView() {
   const menus: MenuItem[] = [
     { icon: <AgricultureIcon sx={{ color: colorPalette.primary.darkGreen }} />, type: "FARMER", name: "Farmer" },
@@ -49,13 +77,16 @@ export default function HomeParentView() {
     { icon: <ExitToAppIcon sx={{ color: colorPalette.primary.darkGreen }} />, type: "SIGNOUT", name: "Sign out" },
   ];
 
+  const active = useActiveAccount();
+  const pannaAddress = active?.address ?? null;
+  const { client } = usePanna();  
+
   const [selected, setSelected] = useState<string>("");
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
 
-  // Panna state (alamat dari akun Panna)
   const {
-    address: pannaAddress,
+    // address: pannaAddress,
     pannaReady,
     pannaError,
     sendContractCall,
@@ -80,11 +111,9 @@ export default function HomeParentView() {
   const handleCopyAddress = async () => {
     if (!pannaAddress) return;
     try {
-      // modern clipboard
       await navigator.clipboard.writeText(pannaAddress);
       showSnack("Address copied to clipboard", "success");
     } catch {
-      // fallback
       try {
         const ta = document.createElement("textarea");
         ta.value = pannaAddress;
@@ -103,8 +132,8 @@ export default function HomeParentView() {
   };
 
   const handleMintFarmer = async () => {
-    if (!pannaAddress) {
-      showSnack("Please connect with Panna first (Login button).", "error");
+    if (!pannaAddress || !isAddress(pannaAddress as `0x${string}`)) {
+      showSnack("Please connect wallet via Panna modal (auto-open setelah login).", "error");
       return;
     }
     if (!pannaReady) {
@@ -148,15 +177,12 @@ export default function HomeParentView() {
       const pinJson: { cid: string; tokenURI: string } = await pinResponse.json();
       if (!pinJson?.cid) throw new Error("Pin metadata response missing CID");
 
-      // address kontrak bisa dari helper config atau env (helper diutamakan)
-      const FARMER_CONTRACT_ADDRESS = (getFarmerContractAddress?.() as `0x${string}`) || FARMER_CONTRACT_ENV;
-
-      // 2) Call kontrak via Thirdweb + akun Panna (gasless by design)
+      // 2) Kirim tx mint via Panna (gasless)
       await sendContractCall({
-        address: FARMER_CONTRACT_ADDRESS,
+        address: import.meta.env.VITE_FARMER_NFT_ADDRESS as `0x${string}`,
         abi: FARMER_NFT_ABI,
         functionName: "mintFarmer",
-        params: [pannaAddress, pinJson.cid], // (to, ipfsCid)
+        params: [pannaAddress, pinJson.cid],
       });
 
       showSnack(`Submitted mint (gasless) for CID ${pinJson.cid}`, "success");
@@ -171,6 +197,7 @@ export default function HomeParentView() {
   const handleClick = (menu: MenuItem) => {
     setSelected(menu.name);
     if (menu.type === "SIGNOUT") setOpen(true);
+    if (menu.type === "LAND") navigate("/lands")
   };
 
   const handleClose = () => setOpen(false);
@@ -183,19 +210,27 @@ export default function HomeParentView() {
   async function logout() {
     setLoading(true);
     setDisableButton(true);
-    await signOut(auth)
-      .then(() => {
-        navigate(-1);
-        handleClose();
-      })
-      .catch((error) => {
-        setError(true);
-        setErrorMsg(error.message);
-        handleClose();
-      });
-    setLoading(false);
-    setDisableButton(false);
+
+    try {
+      // 1) putuskan sesi Panna (jika ada)
+      await signOutPannaSafe(client);
+
+      // 2) logout Firebase
+      await signOut(auth);
+
+      // 3) navigasi balik / ke halaman login
+      navigate(-1); // atau navigate('/auth-signin')
+      handleClose();
+    } catch (error: any) {
+      setError(true);
+      setErrorMsg(error?.message ?? "Logout failed");
+      handleClose();
+    } finally {
+      setLoading(false);
+      setDisableButton(false);
+    }
   }
+
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -225,7 +260,6 @@ export default function HomeParentView() {
           <Box sx={{ mt: 1 }}>
             <Typography variant="caption" color="text.secondary">Wallet (Panna)</Typography>
 
-            {/* Address + Copy button */}
             <Box sx={{ display: "flex", alignItems: "center", gap: 1, mt: 0.5 }}>
               <Typography variant="body2" sx={{ wordBreak: "break-all" }}>
                 {pannaAddress ? `${pannaAddress.slice(0, 6)}...${pannaAddress.slice(-4)}` : "Not connected"}
@@ -244,23 +278,11 @@ export default function HomeParentView() {
               </Tooltip>
             </Box>
 
-            {pannaReady ? (
-              <Typography variant="caption" color="text.secondary">
-                Gasless ready
-              </Typography>
-            ) : (
-              <Typography variant="caption" color="error">
-                Gasless unavailable
-              </Typography>
-            )}
+            <Typography variant="caption" color={pannaReady ? "text.secondary" : "error"}>
+              {pannaReady ? "Gasless ready" : "Gasless unavailable"}
+            </Typography>
 
-            {!pannaAddress ? (
-              <div style={{ marginTop: 8 }}>
-                <LoginButton chain={liskSepolia} />
-              </div>
-            ) : (
-              <Button size="small" disabled sx={{ mt: 1 }}>Connected</Button>
-            )}
+            {/* Tombol manual connect dihapus — modal dibuka otomatis di provider */}
           </Box>
 
           <Snackbar open={snackOpen || Boolean(pannaError)} autoHideDuration={4000} onClose={() => setSnackOpen(false)}>
@@ -299,6 +321,9 @@ export default function HomeParentView() {
           {isMinting ? <CircularProgress size={16} sx={{ mr: 1 }} /> : null}
           {isMinting ? "Submitting mint..." : "Mint Farmer NFT (Gasless Demo)"}
         </Button>
+
+        {/* ⬇️ Aman: hanya kirim ownerAddress kalau valid */}
+        {pannaAddress && <FarmersList ownerAddress={`${pannaAddress}`} />}
       </Box>
 
       <Dialog disableEscapeKeyDown open={open} onClose={(reason) => { if (reason === "backdropClick") return; handleClose(); }}>
@@ -312,7 +337,6 @@ export default function HomeParentView() {
           <Button onClick={() => { logout(); }} sx={{ color: colorPalette.primary.error }}>Logout</Button>
         </DialogActions>
       </Dialog>
-      {pannaAddress && <FarmersList ownerAddress={pannaAddress} />}
     </Box>
   );
 }
