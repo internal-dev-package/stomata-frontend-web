@@ -3,8 +3,8 @@ import { ethers } from 'ethers';
 // ⬇️ kamu meletakkan ABI & tipe di /lib/farmer.ts (bukan /types)
 import { FARMER_NFT_ABI } from '../types/farmer.ts';
 
-const RPC_URL = (import.meta.env.VITE_RPC_URL as string) || '';
-const FARMER_NFT_ADDRESS = (import.meta.env.VITE_FARMER_NFT_ADDRESS as string) || '';
+const RPC_URL = (import.meta.env.VITE_RPC_URL as string) || 'https://rpc.sepolia-api.lisk.com';
+const FARMER_NFT_ADDRESS = (import.meta.env.FARMER_NFT_ADDRESS as string) || '0x97d2960C8bE144794308C48f39D7fb7B883D1960';
 
 function getProvider() {
   if (!RPC_URL) {

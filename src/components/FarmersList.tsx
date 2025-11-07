@@ -26,14 +26,14 @@ export default function FarmersList({ ownerAddress }: { ownerAddress?: string })
 
   return (
     <Box>
-      {/* <Box display="flex" alignItems="center" justifyContent="space-between" mb={1.5}>
+      <Box display="flex" alignItems="center" justifyContent="space-between" mb={1.5}>
         <Typography variant="h6">
           Farmer Tokens {ownerAddress ? `(owner: ${ownerAddress.slice(0,6)}...${ownerAddress.slice(-4)})` : ""}
         </Typography>
-        <Button variant="outlined" size="small" onClick={() => refetch()}>
+        {/* <Button variant="outlined" size="small" onClick={() => refetch()}>
           Refresh
-        </Button>
-      </Box> */}
+        </Button> */}
+      </Box>
 
       {loading && (
         <Grid container spacing={2}>

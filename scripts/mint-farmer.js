@@ -57,14 +57,14 @@ async function main() {
   // Check env vars
   const rpcUrl = process.env.RPC_URL || process.env.VITE_RPC_URL;
   const privateKey = process.env.TEST_PRIVATE_KEY;
-  const contractAddr = process.env.FARMER_NFT_ADDRESS || process.env.VITE_FARMER_NFT_ADDRESS;
+  const contractAddr = process.env.FARMER_NFT_ADDRESS || process.env.FARMER_NFT_ADDRESS;
   
   // Debug environment variables
   console.log('Environment variables:');
   console.log('- RPC_URL:', process.env.RPC_URL ? '[set]' : '[not set]');
   console.log('- VITE_RPC_URL:', process.env.VITE_RPC_URL ? '[set]' : '[not set]');
   console.log('- FARMER_NFT_ADDRESS:', process.env.FARMER_NFT_ADDRESS ? '[set]' : '[not set]');
-  console.log('- VITE_FARMER_NFT_ADDRESS:', process.env.VITE_FARMER_NFT_ADDRESS ? '[set]' : '[not set]');
+  console.log('- FARMER_NFT_ADDRESS:', process.env.FARMER_NFT_ADDRESS ? '[set]' : '[not set]');
   console.log('Using contract address:', contractAddr);
   
   if (!rpcUrl || !privateKey || !contractAddr) {
