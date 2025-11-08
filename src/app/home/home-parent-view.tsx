@@ -198,7 +198,7 @@ export default function HomeParentView() {
           // color: "white",
         }}
       >
-        <Toolbar sx={{ pt: 5 }}>
+        <Toolbar sx={{ pt: 5, pb: 5 }}>
           <Typography
             variant="h6"
             noWrap

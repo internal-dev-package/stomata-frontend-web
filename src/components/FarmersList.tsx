@@ -69,7 +69,7 @@ export default function FarmersList({
 
       {loading && (
         <Grid container spacing={2}>
-          {Array.from({ length: 3 }).map((_, i) => (
+          {Array.from({ length: 15 }).map((_, i) => (
             <Grid key={i} item xs={12} md={6} lg={4}>
               <RowSkeleton />
             </Grid>
@@ -99,7 +99,7 @@ export default function FarmersList({
         <Grid container spacing={2}>
           {data.map((f) => (
             <Grid key={String(f.tokenId)} item xs={12} md={6} lg={4}>
-              <Card variant="outlined">
+              <Card variant="outlined" sx={{ width: 500 }}>
                 <CardHeader
                   avatar={
                     <Avatar sx={{ bgcolor: "success.dark" }}>

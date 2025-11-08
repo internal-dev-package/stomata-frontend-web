@@ -46,7 +46,7 @@ export default function LandsList({
       //   <RowSkeleton />
       // </Box>
       <Grid container spacing={2}>
-        {Array.from({ length: 3 }).map((_, i) => (
+        {Array.from({ length: 15 }).map((_, i) => (
           <Grid key={i} item xs={12} md={6} lg={4}>
             <RowSkeleton />
           </Grid>
