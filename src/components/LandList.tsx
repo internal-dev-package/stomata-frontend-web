@@ -41,7 +41,9 @@ export default function LandsList({
       {items.map((it) => {
         const m = it.meta;
         const title = m?.land?.name || `Token #${it.tokenId}`;
-        const img = m?.ui?.image;
+        // const img = m?.ui?.image;
+        const img =
+          "https://www.green.earth/hubfs/What%20is%20sustainable%20land%20management%20-Pillar%20%20Combating%20Desertification_featured.png";
         const tags: string[] = m?.ui?.tags || [];
         return (
           <Grid item xs={12} md={6} lg={4} key={String(it.tokenId)}>

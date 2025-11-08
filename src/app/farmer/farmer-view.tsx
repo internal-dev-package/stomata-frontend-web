@@ -78,7 +78,9 @@ export default function FarmerView() {
           },
         },
         ui: {
-          image: "https://via.placeholder.com/400x400.png?text=Farmer+Demo",
+          // image: "https://via.placeholder.com/400x400.png?text=Farmer+Demo",
+          image:
+            "https://nestle-nespresso.com/sites/site.prod.nestle-nespresso.com/files/styles/crop_freeform/public/beans_africa.jpg?itok=lAPliHPp",
           tags: ["demo", "gasless", "test"],
         },
         extraAttributes: [

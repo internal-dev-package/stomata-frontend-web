@@ -120,6 +120,11 @@ export default function FarmersList({
                   }
                 />
                 <CardContent>
+                  <img
+                    src="https://nestle-nespresso.com/sites/site.prod.nestle-nespresso.com/files/styles/crop_freeform/public/beans_africa.jpg?itok=lAPliHPp"
+                    alt="Beautiful landscape"
+                    style={{ borderRadius: "10px" }}
+                  />
                   <Box mb={1}>
                     <Typography variant="caption" color="text.secondary">
                       TokenURI:
