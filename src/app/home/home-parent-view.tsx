@@ -108,7 +108,6 @@ export default function HomeParentView() {
   const [errorMsg, setErrorMsg] = useState("");
   const [disableButton, setDisableButton] = useState(false);
   const [userEmail, setUserEmail] = useState("");
-  const [isMinting, setIsMinting] = useState(false);
 
   const showSnack = (message: string, severity: "success" | "error") => {
     setSnackSeverity(severity);
@@ -138,94 +137,6 @@ export default function HomeParentView() {
       } catch (e) {
         showSnack("Failed to copy address", "error");
       }
-    }
-  };
-
-  const handleMintFarmer = async () => {
-    if (!pannaAddress) {
-      showSnack("Please connect with Panna first (Login button).", "error");
-      return;
-    }
-    if (!pannaReady) {
-      showSnack(pannaError || "Panna client is not ready.", "error");
-      return;
-    }
-
-    setIsMinting(true);
-    try {
-      // 1) Pin metadata di backend → dapat CID
-      const metadata = {
-        company: {
-          name: "PT Agro Demo",
-          owner: "Demo Owner",
-          address: {
-            line1: "Jl. Kebun Raya No. 1",
-            city: "Bandung",
-            province: "Jawa Barat",
-            country: "Indonesia",
-          },
-        },
-        farmer: {
-          id: `DEMO-${Date.now()}`,
-          name: "Farmer Demo",
-          nik: `3204${Math.floor(Math.random() * 1_000_000_000)
-            .toString()
-            .padStart(9, "0")}`,
-          age: 34,
-          gender: "M",
-          address: {
-            line1: "Desa Sukamaju",
-            city: "Bandung",
-            province: "Jawa Barat",
-            country: "Indonesia",
-          },
-        },
-        ui: {
-          image: "https://via.placeholder.com/400x400.png?text=Farmer+Demo",
-          tags: ["demo", "gasless", "test"],
-        },
-        extraAttributes: [
-          { trait_type: "experience", value: "5 years" },
-          { trait_type: "commodity", value: "Tea" },
-        ],
-      };
-
-      const pinResponse = await fetch(`${BACKEND_URL}/farmers/pin`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(metadata),
-      });
-      if (!pinResponse.ok) {
-        const errorText = await pinResponse.text();
-        throw new Error(
-          `Pin metadata failed: ${pinResponse.status} ${errorText}`
-        );
-      }
-      const pinJson: { cid: string; tokenURI: string } =
-        await pinResponse.json();
-      if (!pinJson?.cid) throw new Error("Pin metadata response missing CID");
-
-      // address kontrak bisa dari helper config atau env (helper diutamakan)
-      const FARMER_CONTRACT_ADDRESS =
-        (getFarmerContractAddress?.() as `0x${string}`) || FARMER_CONTRACT_ENV;
-
-      // 2) Call kontrak via Thirdweb + akun Panna (gasless by design)
-      await sendContractCall({
-        address: FARMER_CONTRACT_ADDRESS,
-        abi: FARMER_NFT_ABI,
-        functionName: "mintFarmer",
-        params: [pannaAddress, pinJson.cid], // (to, ipfsCid)
-      });
-
-      showSnack(`Submitted mint (gasless) for CID ${pinJson.cid}`, "success");
-    } catch (error) {
-      console.error("Mint farmer failed", error);
-      showSnack(
-        error instanceof Error ? error.message : "Mint failed",
-        "error"
-      );
-    } finally {
-      setIsMinting(false);
     }
   };
 
