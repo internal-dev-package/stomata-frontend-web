@@ -116,6 +116,18 @@ export default function HomeParentView() {
     setSnackOpen(true);
   };
 
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const isScrolled = window.scrollY > 50; // ubah 50 sesuai kebutuhan
+      setScrolled(isScrolled);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   const handleCopyAddress = async () => {
     if (!pannaAddress) return;
     try {
@@ -177,16 +189,21 @@ export default function HomeParentView() {
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
       <AppBar
-        elevation={0}
-        color="transparent"
+        elevation={scrolled ? 4 : 0}
         position="fixed"
-        sx={{ width: `calc(100% - ${drawerWidth}px)`, ml: `${drawerWidth}px` }}
+        sx={{
+          width: `calc(100% - ${drawerWidth}px)`,
+          ml: `${drawerWidth}px`,
+          backgroundColor: scrolled ? "#ffffff" : "transparent",
+          // color: "white",
+        }}
       >
         <Toolbar sx={{ pt: 5 }}>
           <Typography
             variant="h6"
             noWrap
             component="div"
+            color="black"
             sx={{ marginRight: "auto" }}
           >
             Dashboard
@@ -194,6 +211,7 @@ export default function HomeParentView() {
           <Typography
             variant="h6"
             noWrap
+            color="black"
             component="div"
             sx={{ marginLeft: "auto" }}
           >

@@ -65,6 +65,7 @@ export function useLand() {
       // 2) send tx gasless: mintLand(to, cid)
       await sendContractCall({
         address: import.meta.env.VITE_LAND_NFT_ADDRESS as `0x${string}`,
+        // address: "0x9ea593f2cbac4671268a609bbbd7276aea7eb689",
         abi: LAND_NFT_ABI,
         functionName: "mintLand",
         params: [owner, cid],

@@ -129,283 +129,274 @@ export default function AuthSignUpView() {
           alignItems: "center",
         }}
       >
-        <Card
-          elevation={4}
-          sx={{
-            padding: 10,
-            boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.2)",
-            borderRadius: 5,
-          }}
-        >
-          <Box>
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "row",
-              }}
+        <Box>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+            }}
+          >
+            <Typography
+              variant="h6"
+              color={colorPalette.primary.lightGreen}
+              fontWeight={600}
+              textAlign="center"
+              mb={2}
+              paddingRight={1}
             >
-              <Typography
-                variant="h6"
-                color={colorPalette.primary.lightGreen}
-                fontWeight={600}
-                textAlign="center"
-                mb={2}
-                paddingRight={1}
-              >
-                Create account for
-              </Typography>
-              <Typography
-                variant="h6"
-                color="#000000ff"
-                fontWeight={600}
-                textAlign="center"
-                mb={2}
-              >
-                STOMATA App
-              </Typography>
-            </Box>
-
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "row",
-              }}
-              gap={2}
+              Create account for
+            </Typography>
+            <Typography
+              variant="h6"
+              color="#000000ff"
+              fontWeight={600}
+              textAlign="center"
+              mb={2}
             >
-              <TextField
-                label="Full name"
-                onChange={fullNameInput}
-                variant="outlined"
-                fullWidth
-                margin="normal"
-                sx={{
-                  borderRadius: 1,
-                  backgroundColor: "#EBF5EE",
-                  "& .MuiOutlinedInput-root": {
-                    "& fieldset": {
-                      borderColor: "#ccc",
-                    },
-                    "&:hover fieldset": {
-                      borderColor: colorPalette.primary.lightGreen,
-                    },
-                    "&.Mui-focused fieldset": {
-                      borderColor: colorPalette.primary.lightGreen,
-                    },
-                  },
-                  "& .MuiInputLabel-root.Mui-focused": {
-                    color: colorPalette.primary.lightGreen,
-                  },
-                }}
-              />
-              <TextField
-                label="Email Address"
-                onChange={emailInput}
-                variant="outlined"
-                fullWidth
-                margin="normal"
-                sx={{
-                  borderRadius: 1,
-                  backgroundColor: "#EBF5EE",
-                  "& .MuiOutlinedInput-root": {
-                    "& fieldset": {
-                      borderColor: "#ccc",
-                    },
-                    "&:hover fieldset": {
-                      borderColor: colorPalette.primary.lightGreen,
-                    },
-                    "&.Mui-focused fieldset": {
-                      borderColor: colorPalette.primary.lightGreen,
-                    },
-                  },
-                  "& .MuiInputLabel-root.Mui-focused": {
-                    color: colorPalette.primary.lightGreen,
-                  },
-                }}
-              />
-            </Box>
-
-            <TextField
-              label="Phone Number"
-              onChange={phoneNumberInput}
-              variant="outlined"
-              fullWidth
-              margin="normal"
-              sx={{
-                borderRadius: 1,
-                backgroundColor: "#EBF5EE",
-                "& .MuiOutlinedInput-root": {
-                  "& fieldset": {
-                    borderColor: "#ccc",
-                  },
-                  "&:hover fieldset": {
-                    borderColor: colorPalette.primary.lightGreen,
-                  },
-                  "&.Mui-focused fieldset": {
-                    borderColor: colorPalette.primary.lightGreen,
-                  },
-                },
-                "& .MuiInputLabel-root.Mui-focused": {
-                  color: colorPalette.primary.lightGreen,
-                },
-              }}
-            />
-
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "row",
-              }}
-              gap={2}
-            >
-              <TextField
-                label="Company Name"
-                onChange={companyNameInput}
-                variant="outlined"
-                fullWidth
-                margin="normal"
-                sx={{
-                  borderRadius: 1,
-                  backgroundColor: "#EBF5EE",
-                  "& .MuiOutlinedInput-root": {
-                    "& fieldset": {
-                      borderColor: "#ccc",
-                    },
-                    "&:hover fieldset": {
-                      borderColor: colorPalette.primary.lightGreen,
-                    },
-                    "&.Mui-focused fieldset": {
-                      borderColor: colorPalette.primary.lightGreen,
-                    },
-                  },
-                  "& .MuiInputLabel-root.Mui-focused": {
-                    color: colorPalette.primary.lightGreen,
-                  },
-                }}
-              />
-              <TextField
-                label="Company Address"
-                onChange={companyAddressInput}
-                variant="outlined"
-                fullWidth
-                margin="normal"
-                sx={{
-                  borderRadius: 1,
-                  backgroundColor: "#EBF5EE",
-                  "& .MuiOutlinedInput-root": {
-                    "& fieldset": {
-                      borderColor: "#ccc",
-                    },
-                    "&:hover fieldset": {
-                      borderColor: colorPalette.primary.lightGreen,
-                    },
-                    "&.Mui-focused fieldset": {
-                      borderColor: colorPalette.primary.lightGreen,
-                    },
-                  },
-                  "& .MuiInputLabel-root.Mui-focused": {
-                    color: colorPalette.primary.lightGreen,
-                  },
-                }}
-              />
-            </Box>
-
-            <TextField
-              label="Password"
-              onChange={passwordInput}
-              type="password"
-              variant="outlined"
-              fullWidth
-              margin="normal"
-              sx={{
-                borderRadius: 1,
-                backgroundColor: "#EBF5EE",
-                "& .MuiOutlinedInput-root": {
-                  "& fieldset": {
-                    borderColor: "#ccc",
-                  },
-                  "&:hover fieldset": {
-                    borderColor: colorPalette.primary.lightGreen,
-                  },
-                  "&.Mui-focused fieldset": {
-                    borderColor: colorPalette.primary.lightGreen,
-                  },
-                },
-                "& .MuiInputLabel-root.Mui-focused": {
-                  color: colorPalette.primary.lightGreen,
-                },
-              }}
-            />
-
-            <TextField
-              label="Confirm Password"
-              type="password"
-              variant="outlined"
-              fullWidth
-              margin="normal"
-              sx={{
-                borderRadius: 1,
-                backgroundColor: "#EBF5EE",
-                "& .MuiOutlinedInput-root": {
-                  "& fieldset": {
-                    borderColor: "#ccc",
-                  },
-                  "&:hover fieldset": {
-                    borderColor: colorPalette.primary.lightGreen,
-                  },
-                  "&.Mui-focused fieldset": {
-                    borderColor: colorPalette.primary.lightGreen,
-                  },
-                },
-                "& .MuiInputLabel-root.Mui-focused": {
-                  color: colorPalette.primary.lightGreen,
-                },
-              }}
-            />
-            <Button
-              fullWidth
-              onClick={signup}
-              loading={isLoading}
-              disabled={disableButton}
-              variant="contained"
-              sx={{
-                mt: 3,
-                bgcolor: colorPalette.primary.lightGreen,
-                color: colorPalette.primary.white,
-                "&:hover": { bgcolor: colorPalette.primary.darkGreen },
-              }}
-            >
-              Sign up
-            </Button>
-            {isError && (
-              <p
-                style={{
-                  color: colorPalette.primary.error,
-                }}
-              >
-                {errorMsg}
-              </p>
-            )}
-            <Box
-              sx={{
-                // paddingTop: 8,
-                display: "flex",
-                flexDirection: "row",
-              }}
-            >
-              <p>have account? </p>
-              <Button
-                variant="text"
-                loading={isLoading}
-                onClick={goBack}
-                sx={{
-                  color: colorPalette.primary.lightGreen,
-                }}
-              >
-                Sign in
-              </Button>
-            </Box>
+              STOMATA App
+            </Typography>
           </Box>
-        </Card>
+
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+            }}
+            gap={2}
+          >
+            <TextField
+              label="Full name"
+              onChange={fullNameInput}
+              variant="outlined"
+              fullWidth
+              margin="normal"
+              sx={{
+                borderRadius: 1,
+                backgroundColor: "#EBF5EE",
+                "& .MuiOutlinedInput-root": {
+                  "& fieldset": {
+                    borderColor: "#ccc",
+                  },
+                  "&:hover fieldset": {
+                    borderColor: colorPalette.primary.lightGreen,
+                  },
+                  "&.Mui-focused fieldset": {
+                    borderColor: colorPalette.primary.lightGreen,
+                  },
+                },
+                "& .MuiInputLabel-root.Mui-focused": {
+                  color: colorPalette.primary.lightGreen,
+                },
+              }}
+            />
+            <TextField
+              label="Email Address"
+              onChange={emailInput}
+              variant="outlined"
+              fullWidth
+              margin="normal"
+              sx={{
+                borderRadius: 1,
+                backgroundColor: "#EBF5EE",
+                "& .MuiOutlinedInput-root": {
+                  "& fieldset": {
+                    borderColor: "#ccc",
+                  },
+                  "&:hover fieldset": {
+                    borderColor: colorPalette.primary.lightGreen,
+                  },
+                  "&.Mui-focused fieldset": {
+                    borderColor: colorPalette.primary.lightGreen,
+                  },
+                },
+                "& .MuiInputLabel-root.Mui-focused": {
+                  color: colorPalette.primary.lightGreen,
+                },
+              }}
+            />
+          </Box>
+
+          <TextField
+            label="Phone Number"
+            onChange={phoneNumberInput}
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            sx={{
+              borderRadius: 1,
+              backgroundColor: "#EBF5EE",
+              "& .MuiOutlinedInput-root": {
+                "& fieldset": {
+                  borderColor: "#ccc",
+                },
+                "&:hover fieldset": {
+                  borderColor: colorPalette.primary.lightGreen,
+                },
+                "&.Mui-focused fieldset": {
+                  borderColor: colorPalette.primary.lightGreen,
+                },
+              },
+              "& .MuiInputLabel-root.Mui-focused": {
+                color: colorPalette.primary.lightGreen,
+              },
+            }}
+          />
+
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+            }}
+            gap={2}
+          >
+            <TextField
+              label="Company Name"
+              onChange={companyNameInput}
+              variant="outlined"
+              fullWidth
+              margin="normal"
+              sx={{
+                borderRadius: 1,
+                backgroundColor: "#EBF5EE",
+                "& .MuiOutlinedInput-root": {
+                  "& fieldset": {
+                    borderColor: "#ccc",
+                  },
+                  "&:hover fieldset": {
+                    borderColor: colorPalette.primary.lightGreen,
+                  },
+                  "&.Mui-focused fieldset": {
+                    borderColor: colorPalette.primary.lightGreen,
+                  },
+                },
+                "& .MuiInputLabel-root.Mui-focused": {
+                  color: colorPalette.primary.lightGreen,
+                },
+              }}
+            />
+            <TextField
+              label="Company Address"
+              onChange={companyAddressInput}
+              variant="outlined"
+              fullWidth
+              margin="normal"
+              sx={{
+                borderRadius: 1,
+                backgroundColor: "#EBF5EE",
+                "& .MuiOutlinedInput-root": {
+                  "& fieldset": {
+                    borderColor: "#ccc",
+                  },
+                  "&:hover fieldset": {
+                    borderColor: colorPalette.primary.lightGreen,
+                  },
+                  "&.Mui-focused fieldset": {
+                    borderColor: colorPalette.primary.lightGreen,
+                  },
+                },
+                "& .MuiInputLabel-root.Mui-focused": {
+                  color: colorPalette.primary.lightGreen,
+                },
+              }}
+            />
+          </Box>
+
+          <TextField
+            label="Password"
+            onChange={passwordInput}
+            type="password"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            sx={{
+              borderRadius: 1,
+              backgroundColor: "#EBF5EE",
+              "& .MuiOutlinedInput-root": {
+                "& fieldset": {
+                  borderColor: "#ccc",
+                },
+                "&:hover fieldset": {
+                  borderColor: colorPalette.primary.lightGreen,
+                },
+                "&.Mui-focused fieldset": {
+                  borderColor: colorPalette.primary.lightGreen,
+                },
+              },
+              "& .MuiInputLabel-root.Mui-focused": {
+                color: colorPalette.primary.lightGreen,
+              },
+            }}
+          />
+
+          <TextField
+            label="Confirm Password"
+            type="password"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            sx={{
+              borderRadius: 1,
+              backgroundColor: "#EBF5EE",
+              "& .MuiOutlinedInput-root": {
+                "& fieldset": {
+                  borderColor: "#ccc",
+                },
+                "&:hover fieldset": {
+                  borderColor: colorPalette.primary.lightGreen,
+                },
+                "&.Mui-focused fieldset": {
+                  borderColor: colorPalette.primary.lightGreen,
+                },
+              },
+              "& .MuiInputLabel-root.Mui-focused": {
+                color: colorPalette.primary.lightGreen,
+              },
+            }}
+          />
+          <Button
+            fullWidth
+            onClick={signup}
+            loading={isLoading}
+            disabled={disableButton}
+            variant="contained"
+            sx={{
+              mt: 3,
+              bgcolor: colorPalette.primary.lightGreen,
+              color: colorPalette.primary.white,
+              "&:hover": { bgcolor: colorPalette.primary.darkGreen },
+            }}
+          >
+            Sign up
+          </Button>
+          {isError && (
+            <p
+              style={{
+                color: colorPalette.primary.error,
+              }}
+            >
+              {errorMsg}
+            </p>
+          )}
+          <Box
+            sx={{
+              // paddingTop: 8,
+              display: "flex",
+              flexDirection: "row",
+            }}
+          >
+            <p>have account? </p>
+            <Button
+              variant="text"
+              loading={isLoading}
+              onClick={goBack}
+              sx={{
+                color: colorPalette.primary.lightGreen,
+              }}
+            >
+              Sign in
+            </Button>
+          </Box>
+        </Box>
       </Box>
     </div>
   );

@@ -60,5 +60,7 @@ export async function getOwnedLands(owner: Address) {
     } catch {}
     items.push({ tokenId, tokenURI: uri, meta });
   }
+  console.log("item land", items)
   return items;
+
 }
