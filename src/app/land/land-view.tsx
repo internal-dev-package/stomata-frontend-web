@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import { useActiveAccount } from "panna-sdk";
 import LandsList from "../../components/LandList";
 import { useLand } from "../../hooks/useLand";
+import { colorPalette } from "../../theme/color-palette";
 
 const BACKEND_URL =
   (import.meta.env.VITE_BACKEND_URL as string) || "http://localhost:3000";
@@ -51,10 +52,13 @@ export default function LandView() {
         variant="contained"
         disabled={!canTransact || minting}
         onClick={mintDemo}
-        sx={{ width: { xs: "100%", sm: "fit-content" } }}
+        sx={{
+          width: { xs: "100%", sm: "fit-content" },
+          backgroundColor: colorPalette.primary.darkGreen,
+        }}
       >
         {minting ? <CircularProgress size={16} sx={{ mr: 1 }} /> : null}
-        {minting ? "Submitting mint..." : "Mint Land NFT (Gasless Demo)"}
+        {minting ? "Submitting mint..." : "Add Land NFT (Mint)"}
       </Button>
 
       <Typography variant="body2" color="text.secondary">

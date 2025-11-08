@@ -1,4 +1,11 @@
-import { Alert, Box, Button, CircularProgress, Snackbar } from "@mui/material";
+import {
+  Alert,
+  Box,
+  Button,
+  CircularProgress,
+  Snackbar,
+  Typography,
+} from "@mui/material";
 import { useState } from "react";
 
 // Hook yang baru (tanpa low-level relay)
@@ -9,6 +16,7 @@ import FarmersList from "../../components/FarmersList";
 // Kontrak farmer
 import { FARMER_NFT_ABI } from "../../types/farmer";
 import { getFarmerContractAddress } from "../../config/contracts";
+import { colorPalette } from "../../theme/color-palette";
 // Ganti dengan address kontrak kamu (tetap disediakan kalau butuh)
 const FARMER_CONTRACT_ENV = import.meta.env
   .VITE_FARMER_NFT_ADDRESS as `0x${string}`;
@@ -142,9 +150,9 @@ export default function FarmerView() {
         gap: 2,
       }}
     >
-      {/* <Typography variant="h5" gutterBottom>
-          Dashboard
-        </Typography> */}
+      <Typography variant="h5" gutterBottom>
+        Farmer
+      </Typography>
       <Alert severity="info">
         Mint a demo farmer NFT using <b>Panna gasless</b>. Ensure backend is
         running at {BACKEND_URL}.
@@ -153,10 +161,13 @@ export default function FarmerView() {
         variant="contained"
         onClick={handleMintFarmer}
         disabled={!pannaAddress || isMinting}
-        sx={{ width: { xs: "100%", sm: "fit-content" } }}
+        sx={{
+          width: { xs: "100%", sm: "fit-content" },
+          backgroundColor: colorPalette.primary.darkGreen,
+        }}
       >
         {isMinting ? <CircularProgress size={16} sx={{ mr: 1 }} /> : null}
-        {isMinting ? "Submitting mint..." : "Mint Farmer NFT (Gasless Demo)"}
+        {isMinting ? "Submitting mint..." : "Add Farmer NFT (Mint)"}
       </Button>
 
       <FarmersList

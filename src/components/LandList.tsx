@@ -7,6 +7,8 @@ import {
   Chip,
   CircularProgress,
   Grid,
+  Skeleton,
+  Stack,
   Typography,
 } from "@mui/material";
 
@@ -15,6 +17,21 @@ interface LandItem {
   tokenURI: string;
   meta?: any;
 }
+
+function RowSkeleton() {
+  return (
+    <Card variant="outlined">
+      <CardContent>
+        <Stack spacing={1.2}>
+          <Skeleton variant="text" width={180} />
+          <Skeleton variant="text" width="60%" />
+          <Skeleton variant="rounded" width="100%" height={80} />
+        </Stack>
+      </CardContent>
+    </Card>
+  );
+}
+
 export default function LandsList({
   items,
   loading,
@@ -24,9 +41,17 @@ export default function LandsList({
 }) {
   if (loading) {
     return (
-      <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-        <CircularProgress size={18} /> <Typography>Loading lands…</Typography>
-      </Box>
+      // <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+      //   {/* <CircularProgress size={18} /> <Typography>Loading lands…</Typography> */}
+      //   <RowSkeleton />
+      // </Box>
+      <Grid container spacing={2}>
+        {Array.from({ length: 3 }).map((_, i) => (
+          <Grid key={i} item xs={12} md={6} lg={4}>
+            <RowSkeleton />
+          </Grid>
+        ))}
+      </Grid>
     );
   }
   if (!items?.length) {

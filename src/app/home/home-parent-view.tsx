@@ -71,7 +71,7 @@ export default function HomeParentView() {
     {
       icon: <LandslideIcon sx={{ color: colorPalette.primary.darkGreen }} />,
       type: "LAND",
-      name: "Farmland",
+      name: "Farm land",
     },
     {
       icon: (
