@@ -46,6 +46,7 @@ import FarmersList from "../../components/FarmersList";
 // Kontrak farmer
 import { FARMER_NFT_ABI } from "../../types/farmer";
 import FarmerView from "../farmer/farmer-view";
+import LandView from "../land/land-view";
 // Ganti dengan address kontrak kamu (tetap disediakan kalau butuh)
 const FARMER_CONTRACT_ENV = import.meta.env.FARMER_NFT_ADDRESS as `0x${string}`;
 
@@ -301,6 +302,8 @@ export default function HomeParentView() {
       </Drawer>
 
       {selected === "FARMER" && <FarmerView />}
+
+      {selected === "LAND" && <LandView />}
 
       <Dialog
         disableEscapeKeyDown
