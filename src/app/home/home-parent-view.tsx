@@ -86,7 +86,7 @@ export default function HomeParentView() {
     },
   ];
 
-  const [selected, setSelected] = useState<string>("");
+  const [selected, setSelected] = useState<string>("FARMER");
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -141,8 +141,11 @@ export default function HomeParentView() {
   };
 
   const handleClick = (menu: MenuItem) => {
-    setSelected(menu.type);
-    if (menu.type === "SIGNOUT") setOpen(true);
+    if (menu.type === "SIGNOUT") {
+      setOpen(true);
+    } else {
+      setSelected(menu.type);
+    }
   };
 
   const handleClose = () => setOpen(false);
