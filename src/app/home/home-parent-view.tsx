@@ -23,6 +23,7 @@ import {
   CircularProgress,
   IconButton,
   Tooltip,
+  Chip,
 } from "@mui/material";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import AgricultureIcon from "@mui/icons-material/Agriculture";
@@ -231,17 +232,29 @@ export default function HomeParentView() {
         anchor="left"
       >
         <Box sx={{ p: 2 }}>
-          <Typography variant="h6" fontWeight="bold">
+          <Typography
+            variant="h6"
+            fontWeight="bold"
+            color={colorPalette.primary.darkGreen}
+          >
             Stomata App
           </Typography>
-          <Typography variant="body2" color="text.secondary">
+          {/* <Typography variant="body2" color="text.secondary">
             Versi 1.0.0
-          </Typography>
+          </Typography> */}
 
           <Box sx={{ mt: 1 }}>
-            <Typography variant="caption" color="text.secondary">
+            {/* <Typography variant="caption" color="text.secondary">
               Wallet (Panna)
-            </Typography>
+            </Typography> */}
+
+            <Chip
+              label="Wallet (Panna)"
+              sx={{
+                backgroundColor: colorPalette.primary.darkGreen,
+                color: colorPalette.primary.white,
+              }}
+            />
 
             {/* Address + Copy button */}
             <Box
